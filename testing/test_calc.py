@@ -25,3 +25,21 @@ class TestCalc:
     def test_div(self, a, b, expect):
         result = self.calc.div(a, b)
         assert result == expect
+
+    # 浮点数可以用round函数保留小数点后面两位
+    @pytest.mark.parametrize('a,b,expect', [[0.1, 0.2, 0.3], [0.1, 0.1, 0.2]])
+    def test_add_float(self, a, b, expect):
+        result = self.calc.add(a, b)
+        assert round(result, 2) == expect
+
+    # 除数为0的情况
+    @pytest.mark.parametrize('a,b', [[0.1, 0], [1, 0]])
+    def test_div1(self, a, b):
+        # 捕获异常
+        with pytest.raises(ZeroDivisionError):
+            result = self.calc.div(a, b)
+
+        # try:
+        #     result = self.calc.div(1,0)
+        # except ZeroDivisionError:
+        #     print("除数为零")
